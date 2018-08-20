@@ -4,6 +4,7 @@ resource "google_dns_record_set" "etcds" {
 
   # DNS Zone name where record should be created
   managed_zone = "${var.dns_zone_name}"
+  project      = "${var.host_project}"
 
   # DNS record
   name = "${format("%s-etcd%d.%s.", var.cluster_name, count.index,  var.dns_zone)}"
@@ -77,6 +78,8 @@ data "template_file" "controller_config" {
     ssh_authorized_key    = "${var.ssh_authorized_key}"
     k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
     cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    quay_key              = "${var.quay_key}"
+    dockerhub_key         = "${var.dockerhub_key}"
   }
 }
 

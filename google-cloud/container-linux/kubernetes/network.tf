@@ -163,7 +163,7 @@ resource "google_compute_firewall" "internal-kubelet-readonly" {
 }
 
 resource "google_compute_firewall" "google-health-checks" {
-  name = "${var.cluster_name}-google-health-checks"
+  name    = "${var.cluster_name}-google-health-checks"
   network = "${google_compute_network.network.name}"
 
   allow {
@@ -173,5 +173,5 @@ resource "google_compute_firewall" "google-health-checks" {
 
   # https://cloud.google.com/compute/docs/load-balancing/tcp-ssl/tcp-proxy#health-checking
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
-  target_tags = ["${var.cluster_name}-worker"]
+  target_tags   = ["${var.cluster_name}-worker"]
 }

@@ -115,3 +115,7 @@ variable "cluster_domain_suffix" {
   type        = "string"
   default     = "cluster.local"
 }
+
+variable "quay_key" {}
+variable "dockerhub_key" {}
+variable "host_project" {}

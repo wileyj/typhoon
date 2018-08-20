@@ -4,9 +4,10 @@ resource "google_dns_record_set" "apiserver" {
   managed_zone = "${var.dns_zone_name}"
 
   # DNS record
-  name = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"
-  type = "A"
-  ttl  = 300
+  name    = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"
+  type    = "A"
+  ttl     = 300
+  project = "${var.host_project}"
 
   # IPv4 address of apiserver TCP Proxy load balancer
   rrdatas = ["${google_compute_global_address.apiserver-ipv4.address}"]

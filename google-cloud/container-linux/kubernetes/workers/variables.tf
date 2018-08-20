@@ -99,3 +99,6 @@ variable "accelerator_count" {
   default     = "0"
   description = "Number of compute engine accelerators"
 }
+
+variable "quay_key" {}
+variable "dockerhub_key" {}

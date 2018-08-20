@@ -18,4 +18,6 @@ module "workers" {
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"
   clc_snippets          = "${var.worker_clc_snippets}"
+  quay_key              = "${var.quay_key}"
+  dockerhub_key         = "${var.dockerhub_key}"
 }
