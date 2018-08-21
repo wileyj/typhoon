@@ -102,3 +102,4 @@ variable "accelerator_count" {
 
 variable "quay_key" {}
 variable "dockerhub_key" {}
+variable "k8s_service_account" {}

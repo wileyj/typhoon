@@ -58,6 +58,16 @@ resource "google_compute_instance" "controllers" {
 
   can_ip_forward = true
   tags           = ["${var.cluster_name}-controller"]
+
+  service_account {
+    email = "${var.k8s_service_account}"
+
+    scopes = [
+      "userinfo-email",
+      "compute-rw",
+      "storage-rw",
+    ]
+  }
 }
 
 # Controller Container Linux Config

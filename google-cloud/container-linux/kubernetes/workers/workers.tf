@@ -62,6 +62,16 @@ resource "google_compute_instance_template" "worker" {
     # To update an Instance Template, Terraform should replace the existing resource
     create_before_destroy = true
   }
+
+  service_account {
+    email = "${var.k8s_service_account}"
+
+    scopes = [
+      "userinfo-email",
+      "compute-rw",
+      "storage-rw",
+    ]
+  }
 }
 
 # Worker Container Linux Config
