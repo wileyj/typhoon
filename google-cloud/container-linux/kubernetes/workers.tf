@@ -20,4 +20,5 @@ module "workers" {
   clc_snippets          = "${var.worker_clc_snippets}"
   quay_key              = "${var.quay_key}"
   dockerhub_key         = "${var.dockerhub_key}"
+  k8s_service_account   = "${var.k8s_service_account}"
 }
