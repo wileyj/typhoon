@@ -418,3 +418,8 @@ storage:
             --net=host \
             --dns=host \
             --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - "${ssh_authorized_key}"
