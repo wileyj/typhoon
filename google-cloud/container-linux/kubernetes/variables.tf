@@ -97,7 +97,7 @@ variable "networking" {
 variable "pod_cidr" {
   description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = "string"
-  default     = "10.2.0.0/16"
+  default     = "10.232.0.0/16"
 }
 
 variable "service_cidr" {
@@ -107,7 +107,7 @@ The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for
 EOD
 
   type    = "string"
-  default = "10.3.0.0/16"
+  default = "10.233.0.0/16"
 }
 
 variable "cluster_domain_suffix" {
