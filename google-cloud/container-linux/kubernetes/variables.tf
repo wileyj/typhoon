@@ -120,3 +120,7 @@ variable "quay_key" {}
 variable "dockerhub_key" {}
 variable "host_project" {}
 variable "k8s_service_account" {}
+
+variable "cloud_provider" {
+  default = "gce"
+}

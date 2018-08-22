@@ -90,6 +90,7 @@ data "template_file" "controller_config" {
     cluster_domain_suffix = "${var.cluster_domain_suffix}"
     quay_key              = "${var.quay_key}"
     dockerhub_key         = "${var.dockerhub_key}"
+    cloud_provider        = "${var.cloud_provider}"
   }
 }
 
