@@ -2,6 +2,24 @@
 
 Notable changes between versions.
 
+## Latest
+
+#### AWS
+
+* Remove firewall rule allowing ICMP packets to nodes ([#285](https://github.com/poseidon/typhoon/pull/285))
+
+#### Bare-Metal
+
+* Remove `controller_networkds` and `worker_networkds` variables. Use Container Linux Config snippets [#277](https://github.com/poseidon/typhoon/pull/277)
+
+#### Google Cloud
+
+* Fix firewall to allow etcd client port 2379 traffic between controller nodes ([#287](https://github.com/poseidon/typhoon/pull/287))
+  * kube-apiservers were only able to connect to their node's local etcd peer. While master node outages were tolerated, reaching a healthy peer took longer than neccessary in some cases
+  * Reduce time needed to bootstrap the cluster
+* Remove firewall rule allowing workers to access Nginx Ingress health check ([#284](https://github.com/poseidon/typhoon/pull/284))
+  * Nginx Ingress addon no longer uses hostNetwork, Prometheus scrapes via CNI network
+
 ## v1.11.2
 
 * Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)
@@ -14,11 +32,12 @@ Notable changes between versions.
 * Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on bare-metal
   * Validate and additively merge custom Container Linux Configs during terraform plan
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
-  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (action required!)
+  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (**action required!**)
 
 #### Addons
 
 * Update nginx-ingress from 0.16.2 to 0.17.1
+* Add nginx-ingress manifests for bare-metal
 * Update Grafana from 5.2.1 to 5.2.2
 * Update heapster from v1.5.3 to v1.5.4
 
