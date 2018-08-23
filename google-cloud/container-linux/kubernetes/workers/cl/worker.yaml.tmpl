@@ -23,6 +23,7 @@ systemd:
         Description=Wait for DNS entries
         Wants=systemd-resolved.service
         Before=kubelet.service
+        PartOf=kubelet.service
         [Service]
         Type=oneshot
         RemainAfterExit=true
