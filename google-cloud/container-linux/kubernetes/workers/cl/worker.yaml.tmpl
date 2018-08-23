@@ -23,7 +23,6 @@ systemd:
         Description=Wait for DNS entries
         Wants=systemd-resolved.service
         Before=kubelet.service
-        PartOf=kubelet.service
         [Service]
         Type=oneshot
         RemainAfterExit=true
@@ -75,8 +74,7 @@ systemd:
           --node-labels=node-role.kubernetes.io/node \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins \
-          --cloud-provider=${cloud_provider} \
-          --hostname-override=$${HOSTNAME}
+          --cloud-provider=${cloud_provider}
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
         Restart=always
         RestartSec=5
@@ -209,7 +207,7 @@ storage:
           If you are not an authorized employee please logout immediately.
 
           "
-    - path: /etc/modules-load.d/nf.conf
+    - path: /etc/modules-load.d/nf_conntrack.conf
       filesystem: root
       user:
         name: root
@@ -219,6 +217,16 @@ storage:
       contents:
         inline: |
           nf_conntrack
+    - path: /etc/modules-load.d/br_netfilter.conf
+      filesystem: root
+      user:
+        name: root
+      group:
+        name: root
+      mode: 0644
+      contents:
+        inline: |
+          br_netfilter
     - path: /etc/sysctl.d/startup.conf
       filesystem: root
       user:
