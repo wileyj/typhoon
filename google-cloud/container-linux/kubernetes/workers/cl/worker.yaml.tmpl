@@ -16,6 +16,19 @@ systemd:
       enable: true
     - name: locksmithd.service
       mask: true
+    - name: fix-dns.service
+      enable: true
+      contents: |
+        [Unit]
+        Description=Load br_netfilter before networking
+        Wants=network-pre.target
+        Before=kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=false
+        ExecStart=/usr/sbin/modprobe br_netfilter
+        [Install]
+        WantedBy=multi-user.target
     - name: wait-for-dns.service
       enable: true
       contents: |
@@ -207,7 +220,7 @@ storage:
           If you are not an authorized employee please logout immediately.
 
           "
-    - path: /etc/modules-load.d/nf_conntrack.conf
+    - path: /etc/modules-load.d/nf.conf
       filesystem: root
       user:
         name: root
@@ -217,16 +230,6 @@ storage:
       contents:
         inline: |
           nf_conntrack
-    - path: /etc/modules-load.d/br_netfilter.conf
-      filesystem: root
-      user:
-        name: root
-      group:
-        name: root
-      mode: 0644
-      contents:
-        inline: |
-          br_netfilter
     - path: /etc/sysctl.d/startup.conf
       filesystem: root
       user:
