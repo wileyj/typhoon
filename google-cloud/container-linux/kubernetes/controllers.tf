@@ -9,7 +9,7 @@ resource "google_dns_record_set" "etcds" {
   # DNS record
   name = "${format("%s-etcd%d.%s.", var.cluster_name, count.index,  var.dns_zone)}"
   type = "A"
-  ttl  = 300
+  ttl  = 60
 
   # private IPv4 address for etcd
   rrdatas = ["${element(google_compute_instance.controllers.*.network_interface.0.address, count.index)}"]
@@ -46,6 +46,7 @@ resource "google_compute_instance" "controllers" {
     initialize_params {
       image = "${var.os_image}"
       size  = "${var.disk_size}"
+      type = "pd-ssd"
     }
   }
 
