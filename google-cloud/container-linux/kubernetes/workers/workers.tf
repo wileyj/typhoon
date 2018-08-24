@@ -94,5 +94,6 @@ data "template_file" "worker-config" {
     quay_key              = "${var.quay_key}"
     dockerhub_key         = "${var.dockerhub_key}"
     cloud_provider        = "${var.cloud_provider}"
+    region                = "${var.region}"
   }
 }
