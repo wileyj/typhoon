@@ -124,3 +124,7 @@ variable "k8s_service_account" {}
 variable "cloud_provider" {
   default = "gce"
 }
+
+variable "network" {}
+variable "bastion_cidr" {}
+variable "cidr" {}
