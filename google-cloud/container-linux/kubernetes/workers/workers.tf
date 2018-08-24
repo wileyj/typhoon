@@ -41,7 +41,7 @@ resource "google_compute_instance_template" "worker" {
     boot         = true
     source_image = "${var.os_image}"
     disk_size_gb = "${var.disk_size}"
-    disk_type = "pd-ssd"
+    disk_type    = "pd-ssd"
   }
 
   network_interface {

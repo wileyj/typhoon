@@ -46,7 +46,7 @@ resource "google_compute_instance" "controllers" {
     initialize_params {
       image = "${var.os_image}"
       size  = "${var.disk_size}"
-      type = "pd-ssd"
+      type  = "pd-ssd"
     }
   }
 

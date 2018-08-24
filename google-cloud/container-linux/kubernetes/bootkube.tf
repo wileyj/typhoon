@@ -12,6 +12,7 @@ module "bootkube" {
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"
   cloud_provider        = "${var.cloud_provider}"
+
   // temporary
   apiserver_port = 443
 }
