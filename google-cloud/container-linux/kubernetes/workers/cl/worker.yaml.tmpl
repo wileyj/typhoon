@@ -24,7 +24,7 @@ systemd:
         [Service]
         ExecStart=/opt/bin/restart-kubelet
     - name: restart-kubelet.timer
-      enable: false
+      enable: true
       contents: |
         [Unit]
         Description=Runs restart-kubelet once
