@@ -40,6 +40,24 @@ systemd:
       enable: true
     - name: locksmithd.service
       mask: true
+    - name: restart-kubelet.service
+      enable: false
+      contents: |
+        [Unit]
+        Description=Restart wait-for-dns and kubelet
+        [Service]
+        ExecStart=/opt/bin/restart-kubelet
+    - name: restart-kubelet.timer
+      enable: true
+      contents: |
+        [Unit]
+        Description=Runs restart-kubelet once
+        [Timer]
+        # Time to wait after booting before we run first time
+        OnBootSec=2min
+        Unit=restart-kubelet.service
+        [Install]
+        WantedBy=multi-user.target
     - name: wait-for-dns.service
       enable: true
       contents: |
@@ -166,6 +184,38 @@ storage:
       contents:
         inline: |
           REBOOT_STRATEGY "etcd-lock"
+    - path: /opt/bin/restart-kubelet
+      filesystem: root
+      user:
+        name: root
+      group:
+        name: root
+      mode: 0755
+      contents:
+        inline: |
+          #!/bin/bash
+
+          # echo statements so we can watch the status temp.
+
+          echo "stopping wait-for-dns (`date`)" >>  /tmp/restart-kubelet.out
+          /usr/bin/systemctl stop wait-for-dns
+          sleep 5
+
+          echo "stopping kubelet (`date`)" >>  /tmp/restart-kubelet.out
+          /usr/bin/systemctl stop kubelet
+          sleep 5
+
+          echo "starting wait-for-dns (`date`)" >>  /tmp/restart-kubelet.out
+          /usr/bin/systemctl start wait-for-dns
+          sleep 60
+
+          echo "starting kubelet (`date`)" >> /tmp/restart-kubelet.out
+          /usr/bin/systemctl start kubelet
+
+          echo "uptime:`uptime -p`" >>  /tmp/restart-kubelet.out
+          echo "    date: `date`" >> /tmp/restart-kubelet.out
+          exit 0
+
     - path: /opt/bin/docker-enter
       filesystem: root
       user:
