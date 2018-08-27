@@ -48,7 +48,7 @@ systemd:
         [Service]
         ExecStart=/opt/bin/restart-kubelet
     - name: restart-kubelet.timer
-      enable: true
+      enable: false
       contents: |
         [Unit]
         Description=Runs restart-kubelet once
@@ -77,7 +77,6 @@ systemd:
         [Unit]
         Description=Kubelet via Hyperkube
         Wants=rpc-statd.service
-        PartOf=wait-for-dns.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
         Environment="RKT_RUN_ARGS=--uuid-file-save=/var/cache/kubelet-pod.uuid \
@@ -125,7 +124,6 @@ systemd:
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins \
           --cloud-provider=${cloud_provider}
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
-        ExecStop=/usr/bin/systemctl stop wait-for-dns
         Restart=always
         RestartSec=10
         [Install]
